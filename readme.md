@@ -1,5 +1,11 @@
 # pomoc 
 
+**This is how the final result looks like :**
+
+![polybar-module](./assets/module.png)
+
+This is the integration of the **pomoc** with polybar. In addition to the daemon and client, I have used 2 additional scripts for formatting the output. That's it. Now, I shall be able to see the timer.
+
 ## It is 
 
 **What this is about :**
