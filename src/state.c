@@ -21,7 +21,11 @@ void state_init(PomData *data) {
 
 // define the function the return the phase of pomodoro, 
 const char *state_phase_str(PomData *data) {
-    return (data->state == STATE_BREAK_RUNNING) ? "break" : "focus";
+    switch (data->state) {
+        case STATE_BREAK_RUNNING: return "break";
+        case STATE_IDLE: return "idle";
+        default: return "focus";
+    }
     // if the state is equal to STATE_BREAK_RUNNING, then return "break", else "focus"
 }
 
