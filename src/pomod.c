@@ -2,6 +2,8 @@
 // data : 27-06-2026
 // std  : c23
 
+#define _POSIX_C_SOURCE 200809L
+
 // include the systemwide headers. 
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,14 +12,14 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 #include <sys/select.h>
-#include <sys/time.h>
-
+#include <time.h>
 
 // include the program specific headers. 
 #include "protocol.h"
 #include "state.h"
 #include "config.h"
 #include "timer.h"
+
 
 // initialise the PomData struct. 
 // name it the data. 
@@ -268,6 +270,11 @@ int main(void) {
     // output : print that the daemon is running. 
     printf("pomod running. socket: %s\n", SOCKET_PATH);
 
+    // snapshot the current monotonic time before entering the loop.
+    // CLOCK_MONOTONIC never jumps backwards — safe for elapsed time measurement.
+    struct timespec last, now;
+    clock_gettime(CLOCK_MONOTONIC, &last);
+
     while (1) {
         fd_set rfds;
         // fd_set is a set of file descriptors. We are declaring it fresh every iteration. 
@@ -283,23 +290,37 @@ int main(void) {
         int ret = select(server_fd + 1, &rfds, NULL, NULL, &tv);
         // This is the time block. Wakes up when either a client connects, or 1 second passes.
 
-        // only tick if the state of the pomodoro is either running break or running focus. 
-        if (data.state == STATE_FOCUS_RUNNING || data.state == STATE_BREAK_RUNNING) {
-            // we tick the time accordingly. 
-            // modifiy the remaining_hr, min or sec. 
-            int done = timer_tick(&data.remaining_hr, &data.remaining_min, &data.remaining_sec);
-            // if the timer tick succeeds. then 
-            if (done) {
-                // we load the break if focus has completed. 
-                if (data.state == STATE_FOCUS_RUNNING) {
-                    timer_load_break(&data);
-                    data.state = STATE_BREAK_RUNNING;
-                    printf("Focus done. Break started.\n");
-                // else we load the idle state if break has completed. 
-                } else {
-                    data.state = STATE_IDLE;
-                    timer_load_focus(&data);
-                    printf("Break done. Back to idle.\n");
+        // snapshot current time after select returns.
+        // select may return early if a client connects — we cannot trust it as a 1 second clock.
+        // so we measure real elapsed time using CLOCK_MONOTONIC instead.
+        clock_gettime(CLOCK_MONOTONIC, &now);
+        double elapsed = (now.tv_sec  - last.tv_sec) +
+                         (now.tv_nsec - last.tv_nsec) / 1e9;
+
+        // only tick if a real second has passed on the wall clock.
+        // this prevents polybar's 3 modules polling every second from causing 3x timer speed.
+        if (elapsed >= 1.0) {
+            // update last to now, so next tick is measured from here.
+            last = now;
+
+            // only tick if the state of the pomodoro is either running break or running focus. 
+            if (data.state == STATE_FOCUS_RUNNING || data.state == STATE_BREAK_RUNNING) {
+                // we tick the time accordingly. 
+                // modifiy the remaining_hr, min or sec. 
+                int done = timer_tick(&data.remaining_hr, &data.remaining_min, &data.remaining_sec);
+                // if the timer tick succeeds. then 
+                if (done) {
+                    // we load the break if focus has completed. 
+                    if (data.state == STATE_FOCUS_RUNNING) {
+                        timer_load_break(&data);
+                        data.state = STATE_BREAK_RUNNING;
+                        printf("Focus done. Break started.\n");
+                    // else we load the idle state if break has completed. 
+                    } else {
+                        data.state = STATE_IDLE;
+                        timer_load_focus(&data);
+                        printf("Break done. Back to idle.\n");
+                    }
                 }
             }
         }

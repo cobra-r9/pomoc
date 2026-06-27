@@ -7,7 +7,7 @@ INC_DIR  := include
 BIN_DIR  := $(OBJ_DIR)/bin
 
 CC       := gcc
-CFLAGS   := -Wall -Wextra -Wpedantic -O2 -std=c23
+CFLAGS   := -Wall -Wextra -Wpedantic -std=c23
 CPPFLAGS := -I$(INC_DIR) -MMD -MP
 
 # ==============================================================================
