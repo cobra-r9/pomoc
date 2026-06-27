@@ -26,4 +26,8 @@ The source file consists of its definitions.
 ## config - `config.h` and `config.c`
 
 The header file has the declarations for config path and a function to the config values to the pomodoro data. 
-Wheras the source file has the functions defined there. 
+Wheras the source file has the functions defined there.
+
+## timer - `timer.h` and `timer.c`
+
+These are the files for modifying the time data, updating the remaining time and start the countdown process.
