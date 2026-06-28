@@ -17,17 +17,27 @@ The header file contains the constants - the command names, the socket paths - j
 
 While the source file contains the definitions of the constants. When this file is compiled to the object file, the `ld` would find the definitions from its object file for constants that are declared in the header file.
 
-## state - `state.h` and `state.c`
+### state - `state.h` and `state.c`
 
 The header file consists of the PomState enum type for the state of the pomodoro and the struct definition for the PomData, which is the data of the pomodoro around which the entire process revolves around. And the functions for initialising the data as idle, returning the state of the pomodoro whether the break is active or focus is running, and function to return the state.
 
 The source file consists of its definitions.
 
-## config - `config.h` and `config.c`
+### config - `config.h` and `config.c`
 
 The header file has the declarations for config path and a function to the config values to the pomodoro data. 
 Wheras the source file has the functions defined there.
 
-## timer - `timer.h` and `timer.c`
+### timer - `timer.h` and `timer.c`
 
 These are the files for modifying the time data, updating the remaining time and start the countdown process.
+
+### pomoc.c - the pomodoro client
+
+This is much more simpler than the pomod.c (which comes next). This would connect to the socket which was created by the daemon, then send commands to the daemon, when then updates the pomodoro and its state. This would be as a binary : `pomoc`
+
+### pomod.c - the pomodoro daemon
+
+I made this pomodoro as a `client-daemon` model because - you would be able to interact with a single running timer from 5 different programs, each having their own client. For example, say you use the `pomoc` to poll and output the state of the timer, the live running time in the polybar or any other bar system. This is the first client. What if you need to update the time? pause it? from another program on the basis of a set of logic you baked in that program? you call out the second client and use it to modify the state. This `pomod.c` has the logic of **what reply to provide for each command from the client.**
+
+
