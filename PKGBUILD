@@ -1,6 +1,6 @@
 # Maintainer: cobra-r9 <cobra.rev.9@gmail.com>
 pkgname=pomoc
-pkgver=1.0.0
+pkgver=1.0.1
 pkgrel=1
 pkgdesc="A Unix domain socket based pomodoro timer daemon and client"
 arch=('x86_64')
