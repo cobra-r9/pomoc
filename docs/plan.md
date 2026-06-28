@@ -40,4 +40,6 @@ This is much more simpler than the pomod.c (which comes next). This would connec
 
 I made this pomodoro as a `client-daemon` model because - you would be able to interact with a single running timer from 5 different programs, each having their own client. For example, say you use the `pomoc` to poll and output the state of the timer, the live running time in the polybar or any other bar system. This is the first client. What if you need to update the time? pause it? from another program on the basis of a set of logic you baked in that program? you call out the second client and use it to modify the state. This `pomod.c` has the logic of **what reply to provide for each command from the client.**
 
+## Read Next :
 
+**[protocol.h](./protocolh.md)**
