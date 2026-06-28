@@ -239,7 +239,7 @@ active=$(pomoc status active 2>/dev/null)
 if [[ ! "$result" ]]; then
     echo ""
 else
-    echo "$result" | grep -qP "^\d{2}\d{2}\d{2}" &&
+    echo "$result" | grep -qP "^\d{2}:\d{2}:\d{2}" &&
         echo "$result" | sed 's/\([0-9]*\):\([0-9]*\):\([0-9]*\)/\1h \2m \3s/' ||
         echo "$result" | sed 's/\([0-9]*\):\([0-9]*\)/\1m \2s/'
 
@@ -271,3 +271,6 @@ fi
 ```
 
 **Watch out or pull request for other bar integrations.**
+
+>[NOTE]
+> If you want to learn C, know the plan, build similar projects - you can see in the **[docs](./docs)** directory. Start with **[plan.md](./docs/plan.md)**
