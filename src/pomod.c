@@ -233,10 +233,11 @@ static void handle_command(const char *cmd, char *reply) {
 
         int *target = NULL;
         if (strcmp(phase, "focus") == 0) {
-            if      (strcmp(field, "hr")  == 0) target = &data.focus_hr;
-            else if (strcmp(field, "min") == 0) target = &data.focus_min;
-            else if (strcmp(field, "sec") == 0) target = &data.focus_sec;
+            if      (strcmp(field, "hr")  == 0) target = (data.state == STATE_FOCUS_PAUSED) ? &data.remaining_hr : &data.focus_hr;
+            else if (strcmp(field, "min") == 0) target = (data.state == STATE_FOCUS_PAUSED) ? &data.remaining_min : &data.focus_min;
+            else if (strcmp(field, "sec") == 0) target = (data.state == STATE_FOCUS_PAUSED) ? &data.remaining_sec : &data.focus_sec;
         } else if (strcmp(phase, "break") == 0) {
+            // no objections. You cannot change the break's runtime value. (but you can, if you wish to reduce it or increase it occasionally just before the pomodoro starts.)
             if      (strcmp(field, "min") == 0) target = &data.break_min;
             else if (strcmp(field, "sec") == 0) target = &data.break_sec;
         }
@@ -245,6 +246,10 @@ static void handle_command(const char *cmd, char *reply) {
 
         *target += delta;
         if (*target < 0) *target = 0;
+        // handling edge case. While paused, the timer is at : 1:34.
+        // dude first pauses it and decrements 34 sec , it goes to 1:00
+        // then he subracts 1 minute, dude that is zero : that person is me, and it is a bug. 
+        if (data.remaining_hr == 0 && data.remaining_min == 0 && data.remaining_sec == 0) *target = 1;
         sprintf(reply, "%s", RES_OK);
         return;
     }
