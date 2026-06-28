@@ -41,6 +41,16 @@ makepkg -si
 
 This installs `pomod` and `pomoc` to `/usr/bin/`.
 
+**For uninstalling the package :**
+
+If you use arch based distro and installed it via `makepkg`, it is just using `pacman` uninstall.
+
+```bash
+sudo pacman -Rns pomoc
+```
+
+>[!NOTE]
+> `pomoc` is the name of package that is installed in the system. It comes with **two binaries** - `pomoc`, which is the client and `pomod` which is the daemon. When you remove it with `sudo pacman -Rns pomoc`, it removes it as a package - that is both `pomoc` and `pomod` binaries are removed.
 
 ## Setup
 
