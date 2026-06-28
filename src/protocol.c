@@ -10,6 +10,7 @@ const char *SOCKET_PATH = "/tmp/pomo.socket";
 // commands to start pause and end the pomodoro. 
 const char *CMD_START = "START";
 const char *CMD_PAUSE = "PAUSE";
+const char *CMD_TOGGLE = "TOGGLE";
 const char *CMD_END = "END";
 
 // client commands to get various status of the pomod daemon. 

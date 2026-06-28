@@ -9,6 +9,7 @@ extern const char *SOCKET_PATH;
 // commands to start pause and end the pomodoro. 
 extern const char *CMD_START;
 extern const char *CMD_PAUSE;
+extern const char *CMD_TOGGLE;
 extern const char *CMD_END;
 
 // client commands to get various status of the pomod daemon. 

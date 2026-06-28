@@ -81,6 +81,9 @@ int main(int argc, char *argv[]) {
     } else if (strcmp(argv[1], "pause") == 0) {
         snprintf(cmd, sizeof(cmd), "%s", CMD_PAUSE);
 
+    } else if (strcmp(argv[1], "toggle") == 0) {
+        snprintf(cmd, sizeof(cmd), "%s", CMD_TOGGLE);
+
     } else if (strcmp(argv[1], "end") == 0) {
         snprintf(cmd, sizeof(cmd), "%s", CMD_END);
 

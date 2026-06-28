@@ -137,12 +137,40 @@ static void handle_command(const char *cmd, char *reply) {
         return;
     }
 
+    // for command TOGGLE
+    // though I can use switch case statements here, 
+    // we shall prefer this, not going to add too much abstractions with a if else 
+    if (strcmp(cmd, CMD_TOGGLE) == 0) {
+        // cheeck the state.
+        // if it is initially idle 
+        if (data.state == STATE_IDLE) {
+            timer_load_focus(&data);
+            data.state = STATE_FOCUS_RUNNING;
+            sprintf(reply, "%s", RES_OK);
+            return;
+
+        } else if (data.state == STATE_FOCUS_RUNNING) {
+            data.state = STATE_FOCUS_PAUSED;
+            sprintf(reply, "%s", RES_OK);
+            return;
+
+        } else if (data.state == STATE_FOCUS_PAUSED) {
+            data.state = STATE_FOCUS_RUNNING;
+            sprintf(reply, "%s", RES_OK);
+            return;
+        } else {
+            sprintf(reply, "%s pausing a break may cause accidents", RES_ERR);
+            return;
+        }
+        return;
+    }
+
     // for command END 
     if (strcmp(cmd, CMD_END) == 0) {
         // if you try to end the timer when the break is running...
         // then , nope, I am not going to allow 5 hours of programming. You definitely need to touch some grass. 
         if (data.state == STATE_BREAK_RUNNING) {
-            sprintf(reply, "%s cannot end break. touch some grass.", RES_ERR);
+            sprintf(reply, "%s touch some grass", RES_ERR);
             return;
         }
 
