@@ -219,6 +219,9 @@ format-prefix-foreground = ${color.BLUE}
 
 label = "%output%"
 click-left  = /path/to/pomoc-toggle.sh
+;; or if you have the pomoc toggle functionality (see PKGBUILD pkgver=1.0.1)
+;; then you can use the below given as an alternative for pomoc-toggle.sh
+;; click-left = pomoc toggle
 click-right = pomoc end
 
 ```
