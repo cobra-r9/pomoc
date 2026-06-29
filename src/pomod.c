@@ -256,8 +256,15 @@ static void handle_command(const char *cmd, char *reply) {
         if (*target < 0) *target = 0;
         // handling edge case. While paused, the timer is at : 1:34.
         // dude first pauses it and decrements 34 sec , it goes to 1:00
-        // then he subracts 1 minute, dude that is zero : that person is me, and it is a bug. 
-        if (data.remaining_hr == 0 && data.remaining_min == 0 && data.remaining_sec == 0) *target = 1;
+        // then he subracts 1 minute, dude that is zero : that person is me, and it is a bug. Looping forever.
+
+        // And this is how malwares are done by exploiting simple flaws. See, at 45:15. When you do pomoc focus sec -15; then pomoc focus -45, 
+        // you would end up in 01:00 instead of 00:01 (which is what I intended - the smallest value just before ticking). 
+        
+        // if (data.remaining_hr == 0 && data.remaining_min == 0 && data.remaining_sec == 0) *target = 1;
+
+        // therefore, here is the fix : data.remaining_sec = 1;
+        if (data.remaining_hr == 0 && data.remaining_min == 0 && data.remaining_sec == 0) data.remaining_sec = 1;
         sprintf(reply, "%s", RES_OK);
         return;
     }
