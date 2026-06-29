@@ -334,3 +334,6 @@ state="$(pomoc status state)"
 
 >[!NOTE]
 > If you want to learn C, know the plan, build similar projects - you can see in the **[docs](./docs)** directory. Start with **[plan.md](./docs/plan.md)**
+
+> [!NOTE]
+> For additional tips, or if you are willing to suggest some scripts, go to **[tips.md](./docs/tips.md)**
