@@ -46,6 +46,9 @@ static int send_command(const char *cmd, char *reply, int reply_size) {
     // char *strncpy(char dst[restrict dsize], const char *restrict src, size_t dsize)
     // here dsize is the destination size, src is the source string. 
     // literally means - from the source string, copy dsize amount of bytes into the dst buffer (which by the signature's declaration is exactly dsize bytes in size. perfect match.)
+
+    // and this is snprintf. It would definitely add a null terminator, whatsoever via truncation.
+    // see the man 3 snprintf if you need to learn more. (i use it btw.)
     snprintf(addr.sun_path, sizeof(addr.sun_path), "%s", SOCKET_PATH);
 
     if (connect(fd, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
