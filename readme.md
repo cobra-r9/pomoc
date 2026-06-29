@@ -2,7 +2,22 @@
 
 **This is how the final result looks like :**
 
-![polybar-module](./assets/module.png)
+*In Idle*
+
+![idle](./assets/idle.png)
+
+*In Running*
+
+![running](./assets/running.png)
+
+*In Paused*
+
+![paused](./assets/paused.png)
+
+*In Break*
+
+![break](./assets/inbreak.png)
+
 
 This is the integration of the **pomoc** with polybar. In addition to the daemon and client, I have used 2 additional scripts for formatting the output. That's it. Now, I shall be able to see the timer.
 
@@ -293,6 +308,17 @@ else
     fi
 fi
 ```
+
+
+The above given script will send notification spanning 5 seconds : which gives you a visual feedback that the focus has end, or the break has end. **If you really want a break, want a more efficient way out of the computer, trigger your screen lock** by modifiying the script.
+
+*Focus ends*
+
+![focus-ends](./assets/focus-end.png)
+
+*Break ends*
+
+![break-ends](./assets/break-end.png)
 
 
 **pomoc-toggle.sh**
