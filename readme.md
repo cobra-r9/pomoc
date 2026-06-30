@@ -2,24 +2,20 @@
 
 **This is how the final result looks like :**
 
-*In Idle*
+| Mode:       | *In polybar:* | *In waybar:* |
+|-------------|-------------|------------|
+*In Idle*|![idle](./assets/idle.png)|![idle](./assets/waybar-previews/idle.png)|
+*In Running*|![running](./assets/running.png)|![idle](./assets/waybar-previews/running.png)|
+*In Paused*|![paused](./assets/paused.png)|![idle](./assets/waybar-previews/paused.png)|
+*In Break*|![break](./assets/inbreak.png)|![idle](./assets/waybar-previews/break.png)|
 
-![idle](./assets/idle.png)
+*Pomoc running in a few variations of waybar w/ unique themes*
+![bar1](./assets/waybar-previews/bar1.png)
+![bar2](./assets/waybar-previews/bar2.png)
+![bar3](./assets/waybar-previews/bar3.png)
+![bar4](./assets/waybar-previews/bar4.png)
 
-*In Running*
-
-![running](./assets/running.png)
-
-*In Paused*
-
-![paused](./assets/paused.png)
-
-*In Break*
-
-![break](./assets/inbreak.png)
-
-
-This is the integration of the **pomoc** with polybar. In addition to the daemon and client, I have used 2 additional scripts for formatting the output. That's it. Now, I shall be able to see the timer.
+This is the integration of the **pomoc** with polybar and waybar. In addition to the daemon and client, I have used 2 additional scripts for formatting the output. That's it. Now, I shall be able to see the timer.
 
 ## It is 
 
@@ -320,6 +316,9 @@ The above given script will send notification spanning 5 seconds : which gives y
 
 ![break-ends](./assets/break-end.png)
 
+*Break ends - Waybar variant (Using `swaync`)*
+
+![break-ends](./assets/waybar-previews/notification.png)
 
 **pomoc-toggle.sh**
 
