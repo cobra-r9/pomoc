@@ -355,6 +355,49 @@ state="$(pomoc status state)"
 [[ "$state" == "break" ]] && echo "󰔟"
 ```
 
+### waybar
+
+Open your waybar config, and place the following inside:
+```
+            "group/pomoc": {
+                "orientation": "inherit",
+                "modules": [
+                    "custom/pomoc-state",
+                    "custom/pomoc",
+                ]
+            },
+
+            "custom/pomoc": {
+              "exec": "bash /path/to/pomoc.sh",
+              "interval": 1,
+
+              "format": "{}",
+
+              "on-click": "bash -c '/path/to/pomoc toggle'",
+              "on-click-right": "bash -c '/path/to/pomoc end'",
+            },
+
+            "custom/pomoc-state": {
+              "exec": "bash /path/to/pomoc-state.sh",
+              "interval": 1,
+
+              "format": "{} ",
+
+              "on-click": "bash -c '/path/to/pomoc toggle'",
+              "on-click-right": "bash -c '/path/to/pomoc end'"
+            },
+```
+
+> [!IMPORTANT]
+> Make sure to replace all instances of `/path/to/` with the appropriate path for your system.
+
+Then, declare the pomoc group itself in `"modules-left": []`, `"modules-center": []`, or `"modules-right: []` \
+somewhere in your configuration (*likely at the top*) to actually display it.
+
+Finally, start the daemon with `/path/to/pomod &` (or just `pomod &` if you have the Arch pkg), and you're good to go!
+
+> [!TIP]
+> All prior commands demonstrated work in the waybar version as well :)
 
 **Watch out or pull request for other bar integrations.**
 
